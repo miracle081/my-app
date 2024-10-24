@@ -6,4 +6,15 @@
 //or
 // npx create-expo-app --template
 
-//n Git Commands
+//  Git Commands
+/*
+    git config --global user.name "Your Name"
+    git config --global user.email "youremail@yourdomain.com"
+
+    git init
+    git remote add origin https://github.com/miracle081/SkyCart.git 
+
+    git add .
+    git commit -m "Your Message"
+    git push origin main
+*/
