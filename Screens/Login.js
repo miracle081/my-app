@@ -40,7 +40,7 @@ export function Login() {
     return null;
   }
 
-  console.log(onLayoutRootView);
+  // console.log(onLayoutRootView);
 
 
   return (
