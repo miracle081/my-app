@@ -1,10 +1,10 @@
 import { View } from 'react-native';
-import { Initial } from './Screens/Initial';
+import { LogIn } from './Screens/Login';
 
 export default function App() {
   return (
-    <View>
-      <Initial />
+    <View style={{ flex: 1 }}>
+      <LogIn />
     </View>
   );
 }

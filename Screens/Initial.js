@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#335032ba",
     padding: 20,
     paddingTop: 60,
-    height: "100%"
+    height: "100%",
+    
   },
   textHeader: {
     fontSize: 20,
