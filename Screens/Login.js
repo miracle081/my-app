@@ -54,7 +54,13 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     padding: 10,
     // flexDirection: "row",
-    // justifyContent: "space-between"
+    // justifyContent: "space-between",
+    backgroundColor: "white",
+    elevation: 10,
+    shadowColor: "gray",
+    shadowRadius: 5,
+    shadowOpacity: 0.5,
+    shadowOffset: { height: 10, width: 10 }
   },
   child: {
     backgroundColor: "#2dc3ff",
