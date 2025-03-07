@@ -1,108 +1,69 @@
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faShare } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, } from "react-native";
 import { useState } from "react";
-import { FlatList, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Avatar, Button, Card, Drawer } from "react-native-paper"
 
-const LeftContent = props => <Avatar.Icon {...props} icon="account" />
-
-export function LogIn() {
-  const [active, setActive] = useState('');
+export function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
 
-  const notes = [
-    { text: "Going to the market to get food", title: "Shopping" },
-    { text: "Meeting my friends at school", title: "Study" },
-    { text: "Telling someone about my products", title: "Marketing" },
-    { text: "Helping my boss to get new products", title: "Purchase" },
-  ]
+  function handleLogin() {
+    // console.log("Button clicked 2");
+    const data = {
+      username,
+      password,
+    };
+    console.log(data);
+    setUsername("");
+    setPassword("");
+  }
+
+  // console.log("Username: ", username);
+
+
 
   return (
-    <SafeAreaView style={{ marginTop: StatusBar.currentHeight, flex: 1 }}>
-      <View style={[styles.container, { color: "red" }]}>
-        <Text style={{ padding: 20, fontSize: 30, fontFamily: "RubikMaze_400Regular" }}>Log In</Text>
-        <ScrollView>
-          <View style={styles.parent}>
-            <FlatList horizontal={true}
-              data={notes}
-              renderItem={({ item }) => {
-                return (
-                  <View style={styles.child}>
-                    <Text style={{ fontSize: 20, fontFamily: "RubikWetPaint_400Regular" }}>Title: {item.title}</Text>
-                    <Text>{item.text}</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Login</Text>
 
-                    <TouchableOpacity style={{ backgroundColor: "#216ddf", padding: 10, paddingHorizontal: 20, borderRadius: 50, display: "flex", position: "absolute", top: "50%", right: "45%" }}>
-                      <Text style={{ color: "white", textAlign: "center" }}>Edit</Text>
-                    </TouchableOpacity>
-                  </View>
-                )
-              }}
-            />
-          </View>
+      <Text style={styles.text}>{username}</Text>
+      <TextInput
+        style={styles.inp}
+        placeholder="Username"
+        onChangeText={(text) => setUsername(text)}
+        value={username}
+      />
+      <TextInput
+        style={styles.inp}
+        placeholder="Password"
+        onChangeText={(text) => setPassword(text)}
+        value={password}
+      />
 
-          <Button mode='contained'>Clear</Button>
-          <Drawer.Section title="Some title">
-            <Drawer.Item
-              label="First Item"
-              active={active === 'first'}
-              onPress={() => setActive('first')}
-            />
-            <Drawer.Item
-              label="Second Item"
-              active={active === 'second'}
-              onPress={() => setActive('second')}
-            />
-          </Drawer.Section>
-
-          <Card>
-            <Card.Title title="David James" subtitle="Post - 2m ago" left={LeftContent} />
-            <Card.Content>
-              <Text variant="titleLarge">David went to the City of NY, to see his parents</Text>
-              <Text variant="bodyMedium">Card content</Text>
-              <View style={{ alignItems: "flex-end", marginBottom: 10 }}>
-                <FontAwesomeIcon icon={faShare} size={20} color="#216ddf" />
-              </View>
-            </Card.Content>
-            <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-            <Card.Actions>
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faHeart} size={30} color="#216ddf" />
-              </TouchableOpacity>
-              <Button>Cancel</Button>
-              <Button>Ok</Button>
-            </Card.Actions>
-          </Card>
-
-        </ScrollView>
-      </View>
-
-    </SafeAreaView>
-  )
+      {/* <Button title="Login" color="#ff7700" onPress={() => console.log("Button clicked")} /> */}
+      <TouchableOpacity onPress={() => handleLogin()} style={{ backgroundColor: "#ff7700", padding: 10, borderRadius: 10, marginVertical: 10 }}>
+        <Text style={{ color: "white", textAlign: "center" }}>Login</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20
-  },
-  parent: {
-    borderWidth: 1,
-    borderColor: "gray",
-    padding: 10,
-    // flexDirection: "row",
-    // justifyContent: "space-between",
-    backgroundColor: "white",
-    elevation: 10,
-    shadowColor: "gray",
-    shadowRadius: 5,
-    shadowOpacity: 0.5,
-    shadowOffset: { height: 10, width: 10 }
-  },
-  child: {
-    backgroundColor: "#2dc3ff",
+    height: "100%",
+    // marginTop: 50,
     padding: 20,
-    margin: 3,
-    height: 300,
-  }
-})
+    justifyContent: "center",
+  },
+  text: {
+    color: "#ff7700",
+    fontSize: 35,
+    textAlign: "center",
+  },
+  inp: {
+    marginVertical: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ff7700",
+    borderRadius: 10,
+  },
+});
