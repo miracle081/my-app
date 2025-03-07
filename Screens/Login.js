@@ -43,6 +43,14 @@ export function Login() {
       <TouchableOpacity onPress={() => handleLogin()} style={{ backgroundColor: "#ff7700", padding: 10, borderRadius: 10, marginVertical: 10 }}>
         <Text style={{ color: "white", textAlign: "center" }}>Login</Text>
       </TouchableOpacity>
+
+      {
+        ["user", "james", "mark"].map(element => {
+          return (
+            <Text>{element}</Text>
+          )
+        })
+      }
     </View>
   );
 }
