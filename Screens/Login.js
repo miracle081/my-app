@@ -1,8 +1,14 @@
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ScrollView, Alert, FlatList, SafeAreaView, StatusBar, } from "react-native";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faGoogle, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { ActivityIndicator, MD2Colors, Snackbar } from "react-native-paper";
+import { Rubik_400Regular, Rubik_900Black_Italic } from "@expo-google-fonts/rubik";
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
+import { RubikWetPaint_400Regular } from "@expo-google-fonts/rubik-wet-paint";
+import { Pacifico_400Regular } from "@expo-google-fonts/pacifico";
+
 
 export function Login() {
   const [username, setUsername] = useState("");
@@ -37,7 +43,37 @@ export function Login() {
     // );
   }
 
+  const [appIsReady, setAppIsReady] = useState(false);
 
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync({
+          Rubik_400Regular,
+          Rubik_900Black_Italic,
+          RubikWetPaint_400Regular,
+          Pacifico_400Regular
+        });
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(() => {
+    if (appIsReady) {
+      SplashScreen.hide();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -126,6 +162,9 @@ const styles = StyleSheet.create({
     color: "#ff7700",
     fontSize: 35,
     textAlign: "center",
+    fontFamily: "Pacifico_400Regular",
+    // fontStyle: "italic",
+    // fontWeight: "900"
   },
   inp: {
     marginVertical: 10,
