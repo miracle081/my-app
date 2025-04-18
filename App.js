@@ -9,3 +9,5 @@ export default function App() {
     </View>
   )
 }
+
+const styles = null
