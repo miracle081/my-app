@@ -3,6 +3,7 @@ import { Login } from './Screens/Login'
 
 
 export default function App() {
+  const url = "https://images.unsplash.com/photo-167763195"
   return (
     <View>
       <Login />
