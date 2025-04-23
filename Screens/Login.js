@@ -112,26 +112,12 @@ export function Login() {
 
         <ActivityIndicator animating={loading} color={MD2Colors.red800} size={90} />
 
-        {/* <Snackbar
-          visible={visible}
-          onDismiss={onDismissSnackBar}
-          action={{
-            label: 'Undo',
-            onPress: () => {
-              // Do something
-            },
-          }}>
-          Hey there! I'm a Snackbar.
-        </Snackbar> */}
-
         {/* <View style={{ flexWrap: "wrap", flexDirection: "row", flex: 1, backgroundColor: "#0000001d", marginTop: 30 }}>
           <View style={{ backgroundColor: "green", width: 110, height: 110, margin: 3, position: "absolute", right: 0, top: -20, zIndex: 1 }} />
           <View style={{ backgroundColor: "gray", width: 100, height: 100, margin: 3, }} />
           <View style={{ backgroundColor: "gray", width: 100, height: 100, margin: 3, }} />
           <View style={{ backgroundColor: "gray", width: 100, height: 100, margin: 3, }} />
         </View> */}
-
-
 
       </ScrollView>
       {/* <FlatList horizontal={false}
@@ -146,10 +132,11 @@ export function Login() {
           );
         }}
       /> */}
+
+
     </SafeAreaView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
