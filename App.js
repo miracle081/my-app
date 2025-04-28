@@ -1,14 +1,16 @@
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
-import { Login } from './Screens/Login'
+import { View, Text, Image } from 'react-native';
+import { Layout } from './Screens/Layout';
 
 
 export default function App() {
-  const url = "https://images.unsplash.com/photo-167763195"
   return (
-    <View>
-      <Login />
+    <View style={{ marginTop: 60 }}>
+      <Layout />
+      {/* <Text style={{ fontSize: 30, color: "blue", textAlign: "center" }}>App - React Native.</Text>
+      <Image source={require("./assets/rn.jpg")}
+        style={{ width: "100%", height: 230, marginVertical: 20 }}
+      />
+      <Text>React Native is fun</Text> */}
     </View>
-  )
+  );
 }
-
-const styles = null

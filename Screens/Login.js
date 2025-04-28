@@ -81,7 +81,7 @@ export function Login() {
         <Text style={styles.text}>Login</Text>
 
         <TextInput
-          style={styles.inp}
+          style={[styles.inp, { borderColor: "red" }]}
           placeholder="Username"
           onChangeText={(text) => setUsername(text)}
           value={username}
