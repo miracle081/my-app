@@ -1,5 +1,4 @@
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
-import { overlay } from 'react-native-paper';
 
 export default function App() {
 
