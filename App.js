@@ -1,10 +1,12 @@
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { Layout } from './Screens/Layout';
 
 export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={{ color: "green", fontSize: 25, textAlign: "center", marginBottom: 10 }} >Introduction to React Native</Text>
+      <Layout />
+      {/* <Text style={{ color: "green", fontSize: 25, textAlign: "center", marginBottom: 10 }} >Introduction to React Native</Text>
       <Text>React Native brings the best parts of developing with React to native development. It's a best-in-class JavaScript library for building user interfaces.</Text>
       <Image source={require("./assets/bg.jpg")} style={styles.img} />
       <ImageBackground
@@ -18,17 +20,18 @@ export default function App() {
           <Text style={styles.header}>Best Framework</Text>
           <Text style={[styles.header, { fontSize: 20 }]}>React Native brings the best parts of developing with React to native development. It's a best-in-class JavaScript library for building user interfaces.</Text>
         </View>
-      </ImageBackground>
+      </ImageBackground> */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
+    paddingTop: 60,
     // backgroundColor: "gray",
-    backgroundColor: "#ececec",
+    backgroundColor: "#22044f23",
     padding: 20,
+    flex: 1
   },
   img: {
     width: "100%",
