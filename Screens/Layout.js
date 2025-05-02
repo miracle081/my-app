@@ -1,9 +1,15 @@
-import { Alert, Button, FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBorderAll, faHome, faUser } from '@fortawesome/free-solid-svg-icons';
+import { Avatar, Card, Searchbar, Button } from 'react-native-paper';
+
+const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
 export function Layout() {
     const [searchValue, setSearchValue] = useState("car");
     const [data, setData] = useState(['Food', 'Laptop', 'Lamborghini', 'House', 'TV', 'Land']);
+    const [searchQuery, setSearchQuery] = useState('');
 
     let userText = "what the users typed";
     userText = "User is out"
@@ -16,39 +22,66 @@ export function Layout() {
         )
     }
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <Text style={styles.header}>Layout</Text>
-            <View style={{ flexDirection: "row", gap: 5, marginVertical: 10, }}>
-                <TextInput
+            <ScrollView >
+
+                <View style={{ flexDirection: "row", gap: 5, marginVertical: 10, }}>
+                    <TextInput
+                        placeholder="Search"
+                        style={styles.searchInpute}
+                        onChangeText={(inp) => { setSearchValue(inp) }}
+                    />
+                    {/* <Button title="Create" color="red" onPress={() => { alert("Button clicked") }} /> */}
+
+                    <TouchableOpacity onPress={() => handlePress()} style={{ backgroundColor: "#22044f", padding: 10, paddingHorizontal: 15, borderRadius: 50, alignItems: "center" }}>
+                        <Text style={{ color: "white" }}>Search</Text>
+                    </TouchableOpacity>
+                </View>
+                <View>
+                    <FlatList style={{ marginVertical: 20, }}
+                        contentContainerStyle={{ gap: 10 }}
+                        columnWrapperStyle={{ gap: 10 }}
+                        numColumns={2}
+                        data={data}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <View style={{ flex: 1, display: item === true ? "none" : "flex" }}>
+                                    <Image source={require("../assets/bg.jpg")} style={styles.img} />
+                                    <Text>{item}</Text>
+                                    <TouchableOpacity onPress={() => { setData(data.filter(text => text != item)) }} style={styles.remove}>
+                                        <Text style={{ color: "#22044f" }}>X</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )
+                        }}
+                    />
+                </View>
+                <Searchbar
                     placeholder="Search"
-                    style={styles.searchInpute}
-                    onChangeText={(inp) => { setSearchValue(inp) }}
+                    onChangeText={setSearchQuery}
+                    value={searchQuery}
                 />
-                {/* <Button title="Create" color="red" onPress={() => { alert("Button clicked") }} /> */}
 
-                <TouchableOpacity onPress={() => handlePress()} style={{ backgroundColor: "#22044f", padding: 10, paddingHorizontal: 15, borderRadius: 50, alignItems: "center" }}>
-                    <Text style={{ color: "white" }}>Search</Text>
-                </TouchableOpacity>
+                <Card>
+                    <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
+                    <Card.Content>
+                        <Text variant="titleLarge">Card title</Text>
+                        <Text variant="bodyMedium">Card content</Text>
+                    </Card.Content>
+                    <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                    <Card.Actions>
+                        <Button>Cancel</Button>
+                        <Button>Ok</Button>
+                    </Card.Actions>
+                </Card>
+            </ScrollView>
+
+            <View style={{ flexDirection: "row", justifyContent: "space-between", borderWidth: 2, borderColor: "#22044f", borderRadius: 20, padding: 10, marginTop: 10 }}>
+                <FontAwesomeIcon icon={faHome} size={30} color="#22044f" />
+                <FontAwesomeIcon icon={faBorderAll} size={30} color="#22044f" />
+                <FontAwesomeIcon icon={faUser} size={30} color="#22044f" />
             </View>
-
-            <FlatList style={{ marginVertical: 20, }}
-                contentContainerStyle={{ gap: 10 }}
-                columnWrapperStyle={{ gap: 10 }}
-                numColumns={2}
-                data={data}
-                renderItem={({ item, index }) => {
-                    return (
-                        <View style={{ flex: 1, display: item === true ? "none" : "flex" }}>
-                            <Image source={require("../assets/bg.jpg")} style={styles.img} />
-                            <Text>{item}</Text>
-                            <TouchableOpacity onPress={() => { setData(data.filter(text => text != item)) }} style={styles.remove}>
-                                <Text style={{ color: "#22044f" }}>X</Text>
-                            </TouchableOpacity>
-                        </View>
-                    )
-                }}
-            />
-
         </View>
     )
 }
@@ -66,7 +99,7 @@ const styles = StyleSheet.create({
     header: {
         color: "#22044f",
         fontSize: 30,
-        textAlign: "center"
+        textAlign: "center",
     },
     img: {
         width: "100%",
