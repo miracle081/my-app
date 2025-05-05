@@ -1,8 +1,13 @@
 import { Alert, FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBorderAll, faHome, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Avatar, Card, Searchbar, Button } from 'react-native-paper';
+import Entypo from '@expo/vector-icons/Entypo';
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
+import { Pacifico_400Regular } from '@expo-google-fonts/pacifico';
+import { RubikWetPaint_400Regular } from '@expo-google-fonts/rubik-wet-paint';
 
 const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
@@ -10,6 +15,33 @@ export function Layout() {
     const [searchValue, setSearchValue] = useState("car");
     const [data, setData] = useState(['Food', 'Laptop', 'Lamborghini', 'House', 'TV', 'Land']);
     const [searchQuery, setSearchQuery] = useState('');
+    const [appIsReady, setAppIsReady] = useState(false);
+
+    useEffect(() => {
+        async function prepare() {
+            try {
+                await Font.loadAsync({ Pacifico_400Regular });
+                await Font.loadAsync({ RubikWetPaint_400Regular });
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            } catch (e) {
+                console.warn(e);
+            } finally {
+                setAppIsReady(true);
+            }
+        }
+
+        prepare();
+    }, []);
+
+    const onLayoutRootView = useCallback(() => {
+        if (appIsReady) {
+            SplashScreen.hideAsync();
+        }
+    }, [appIsReady]);
+
+    if (!appIsReady) {
+        return null;
+    }
 
     let userText = "what the users typed";
     userText = "User is out"
@@ -21,9 +53,11 @@ export function Layout() {
             [{ text: "Try again", onPress: () => handlePress() }, { text: "Try Later" }]
         )
     }
+
     return (
         <View style={{ flex: 1 }}>
             <Text style={styles.header}>Layout</Text>
+
             <ScrollView >
 
                 <View style={{ flexDirection: "row", gap: 5, marginVertical: 10, }}>
@@ -31,6 +65,7 @@ export function Layout() {
                         placeholder="Search"
                         style={styles.searchInpute}
                         onChangeText={(inp) => { setSearchValue(inp) }}
+                        value={searchValue}
                     />
                     {/* <Button title="Create" color="red" onPress={() => { alert("Button clicked") }} /> */}
 
@@ -38,6 +73,7 @@ export function Layout() {
                         <Text style={{ color: "white" }}>Search</Text>
                     </TouchableOpacity>
                 </View>
+
                 <View>
                     <FlatList style={{ marginVertical: 20, }}
                         contentContainerStyle={{ gap: 10 }}
@@ -61,9 +97,10 @@ export function Layout() {
                     placeholder="Search"
                     onChangeText={setSearchQuery}
                     value={searchQuery}
+                    v
                 />
 
-                <Card>
+                <Card style={{ marginTop: 10 }}>
                     <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
                     <Card.Content>
                         <Text variant="titleLarge">Card title</Text>
@@ -100,6 +137,8 @@ const styles = StyleSheet.create({
         color: "#22044f",
         fontSize: 30,
         textAlign: "center",
+        // fontFamily: "Pacifico_400Regular",
+        fontFamily: "RubikWetPaint_400Regular",
     },
     img: {
         width: "100%",
