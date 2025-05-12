@@ -1,12 +1,18 @@
-import { Alert, Button, FlatList, Image, Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
+import { Alert, Button as RNButton, FlatList, Image, Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons/faThumbsUp";
+import { faComment, faRetweet } from "@fortawesome/free-solid-svg-icons";
+import { Avatar, Button, Card } from "react-native-paper";
 
+
+const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 export function Home() {
     const [search, setSearch] = useState("car");
     const [users, setUsers] = useState([
+        { id: 3, name: "James Bond", img: require("../assets/rn.jpg") },
         { id: 1, name: "Harry Potter", img: require("../assets/bg.jpg") },
         { id: 2, name: "John Wick", img: require("../assets/user.jpg") },
-        { id: 3, name: "James Bond", img: require("../assets/rn.jpg") },
         { id: 4, name: "Tony Stark", img: require("../assets/icon.png") },
         { id: 5, name: "Bruce Wayne", img: require("../assets/user.jpg") },
     ]);
@@ -32,10 +38,14 @@ export function Home() {
     }
 
     return (
-        <SafeAreaView style={{ marginTop: StatusBar.currentHeight, }}>
+        <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight, }}>
+            {/* <StatusBar hidden={false} backgroundColor="black" /> */}
             <View style={styles.container}>
-                <View style={{ flexDirection: "row", gap: 10 }}>
-                    <Image source={require("../assets/user.jpg")} style={styles.img} />
+                <View style={{
+                    flexDirection: "row", gap: 10, marginBottom: 10,
+                }}>
+                    <Image source={require("../assets/user.jpg")} style={styles.img
+                    } />
                     <TextInput
                         placeholder="Search"
                         style={styles.searchInpute}
@@ -78,35 +88,64 @@ export function Home() {
                         } */}
                     </View>
 
-                    <View style={{ marginTop: 30, borderTopWidth: 1, borderTopColor: "#ccc", paddingTop: 20 }}>
-                        <View style={styles.user}>
-                            <Image source={require("../assets/user.jpg")} style={[styles.img, { width: 70, height: 70 }]} />
-                            <View>
-                                <Text style={{ fontSize: 20 }}>Telegram CEO</Text>
-                                <Text style={styles.handle}>@telegram</Text>
-                                <Text style={styles.handle}>5 min ago</Text>
+                    <Card>
+                        <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
+                        <Card.Content>
+                            <Text variant="titleLarge">Card title</Text>
+                            <Text variant="bodyMedium">Card content</Text>
+                        </Card.Content>
+                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                        <Card.Actions>
+                            <Button>Cancel</Button>
+                            <Button>Ok</Button>
+                        </Card.Actions>
+                    </Card>
+
+                    {users.map(item => {
+                        return (
+                            <View key={item.id} style={{ marginTop: 10, paddingTop: 20 }}>
+                                <View style={styles.user}>
+                                    <Image source={item.img} style={[styles.img, { width: 70, height: 70 }]} />
+                                    <View>
+                                        <Text style={{ fontSize: 20 }}>{item.name}</Text>
+                                        <Text style={styles.handle}>@telegram</Text>
+                                        <Text style={styles.handle}>5 min ago</Text>
+                                    </View>
+                                </View>
+                                <Text style={{ fontSize: 15, marginBottom: 10 }}>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.
+                                </Text>
+                                <Image source={require("../assets/bg.jpg")} style={{ width: "100%", height: 200, borderRadius: 20 }} />
+                                <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 10, borderbottomWidth: 1, borderBottomColor: "#ccc", paddingBottom: 10 }}>
+                                    <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
+                                        <FontAwesomeIcon icon={faThumbsUp} size={24} />
+                                        <Text>654</Text>
+                                    </View>
+                                    <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
+                                        <FontAwesomeIcon icon={faComment} size={24} />
+                                        <Text>1,584</Text>
+                                    </View>
+                                    <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
+                                        <FontAwesomeIcon icon={faRetweet} size={24} />
+                                        <Text>54</Text>
+                                    </View>
+                                </View>
+                                <Button mode="contained">Save</Button>
                             </View>
-                        </View>
-                        <Text style={{ fontSize: 15, marginBottom: 10 }}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.
-                        </Text>
-                        <Image source={require("../assets/bg.jpg")} style={{ width: "100%", height: 200, borderRadius: 20 }} />
-                        <View>
-                            <Text>👍🏻 654</Text>
-                            <Text>💬 281</Text>
-                            <Text>🔁 73</Text>
-                        </View>
-                    </View>
+                        )
+                    })}
+
                 </ScrollView>
             </View>
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        // marginTop: Platform.OS === "android" ? StatusBar.currentHeight : null
+        marginTop: Platform.OS === "android" ? StatusBar.currentHeight : null,
         padding: 20,
+        flex: 1
     },
     img: {
         width: 50,
