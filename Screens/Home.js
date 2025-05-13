@@ -6,7 +6,7 @@ import { faComment, faRetweet } from "@fortawesome/free-solid-svg-icons";
 import { Avatar, Button, Card } from "react-native-paper";
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { MontserratAlternates_400Regular } from "@expo-google-fonts/montserrat-alternates";
+import { MontserratAlternates_400Regular, MontserratAlternates_600SemiBold } from "@expo-google-fonts/montserrat-alternates";
 
 const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 export function Home() {
@@ -21,7 +21,7 @@ export function Home() {
     ]);
 
     function handleSearch(inp) {
-        // console.log(inp);
+        setSearch(inp);
         ToastAndroid.showWithGravity(
             "Your searched word(s) was not found",
             ToastAndroid.LONG,
@@ -41,17 +41,14 @@ export function Home() {
     }
 
     useEffect(() => {
+        setSearch("car");
         async function prepare() {
             try {
-                // Pre-load fonts, make any API calls you need to do here
-                await Font.loadAsync({ MontserratAlternates_400Regular });
-                // Artificially delay for two seconds to simulate a slow loading
-                // experience. Remove this if you copy and paste the code!
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                await Font.loadAsync({ MontserratAlternates_400Regular, MontserratAlternates_600SemiBold });
+                await new Promise(resolve => setTimeout(resolve, 1000));
             } catch (e) {
                 console.warn(e);
             } finally {
-                // Tell the application to render
                 setAppIsReady(true);
             }
         }
@@ -59,20 +56,25 @@ export function Home() {
         prepare();
     }, []);
 
-    const onLayoutRootView = useCallback(() => {
+    useEffect(() => {
+        // console.log("Search input changed: ", search);
+    }, [search])
+
+    useCallback(() => {
         if (appIsReady) {
-            // This tells the splash screen to hide immediately! If we call this after
-            // `setAppIsReady`, then we may see a blank screen while the app is
-            // loading its initial state and rendering its first pixels. So instead,
-            // we hide the splash screen once we know the root view has already
-            // performed layout.
-            SplashScreen.hide();
+            SplashScreen.hideAsync();
         }
     }, [appIsReady]);
 
     if (!appIsReady) {
         return null;
     }
+
+    const fonts = {
+        text400: "MontserratAlternates_400Regular",
+        text600: "MontserratAlternates_600SemiBold",
+    }
+
 
     return (
         <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight, }}>
@@ -86,7 +88,7 @@ export function Home() {
                     <TextInput
                         placeholder="Search"
                         style={styles.searchInpute}
-                        onChangeText={(inp) => { handleSearch(inp) }}
+                        onChangeText={handleSearch}
                     />
                     {/* <Button title="Create" color="red" onPress={() => { alert("Button clicked") }} /> */}
                     <TouchableOpacity onPress={() => { setSearch("Telegram"); handleSearchPress() }} style={styles.btn}>
@@ -104,7 +106,7 @@ export function Home() {
                                 return (
                                     <View style={{ alignItems: "center" }}>
                                         <Image source={item.img} style={[styles.img, { width: 100, height: 100 }]} />
-                                        <Text style={{ fontSize: 20 }}>{item.name}</Text>
+                                        <Text style={{ fontSize: 20, fontFamily: "MontserratAlternates_400Regular" }}>{item.name}</Text>
                                         <TouchableOpacity style={styles.deleteBTN}>
                                             <Text style={{ color: "white" }}>X</Text>
                                         </TouchableOpacity>
@@ -144,27 +146,27 @@ export function Home() {
                                 <View style={styles.user}>
                                     <Image source={item.img} style={[styles.img, { width: 70, height: 70 }]} />
                                     <View>
-                                        <Text style={{ fontSize: 20, fontWeight: "200", fontFamily: "MontserratAlternates_400Regular" }}>{item.name}</Text>
+                                        <Text style={{ fontSize: 20, fontWeight: "200", fontFamily: fonts.text400 }}>{item.name}</Text>
                                         <Text style={styles.handle}>@telegram</Text>
                                         <Text style={styles.handle}>5 min ago</Text>
                                     </View>
                                 </View>
-                                <Text style={{ fontSize: 15, marginBottom: 10 }}>
+                                <Text style={{ fontSize: 15, marginBottom: 10, fontFamily: "MontserratAlternates_400Regular" }}>
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.
                                 </Text>
                                 <Image source={require("../assets/bg.jpg")} style={{ width: "100%", height: 200, borderRadius: 20 }} />
                                 <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 10, borderbottomWidth: 1, borderBottomColor: "#ccc", paddingBottom: 10 }}>
                                     <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
                                         <FontAwesomeIcon icon={faThumbsUp} size={24} />
-                                        <Text>654</Text>
+                                        <Text style={{ fontFamily: "MontserratAlternates_400Regular" }}>654</Text>
                                     </View>
                                     <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
                                         <FontAwesomeIcon icon={faComment} size={24} />
-                                        <Text>1,584</Text>
+                                        <Text style={{ fontFamily: "MontserratAlternates_400Regular" }}>1,584</Text>
                                     </View>
                                     <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
                                         <FontAwesomeIcon icon={faRetweet} size={24} />
-                                        <Text>54</Text>
+                                        <Text style={{ fontFamily: "MontserratAlternates_400Regular" }}>54</Text>
                                     </View>
                                 </View>
                                 <Button mode="contained">Save</Button>
@@ -198,6 +200,16 @@ const styles = StyleSheet.create({
         flex: 1,
         borderWidth: 1,
         borderColor: "#5d21b7",
+        fontFamily: "MontserratAlternates_400Regular",
+        backgroundColor: "#fefefe",
+        shadowColor: "#000000",
+        shadowOffset: {
+            width: 8,
+            height: 10,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 5,
     },
     btn: {
         backgroundColor: "#5d21b7",
@@ -229,5 +241,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: "gray",
         fontStyle: "italic",
+        fontFamily: "MontserratAlternates_400Regular"
     }
 })
